@@ -30,8 +30,7 @@ namespace Lab10.API.Controllers
                 return NotFound();
             return Ok(user);
         }
-
-        // POST: delcarpio/user
+        
         [HttpPost]
         public ActionResult<User> Post([FromBody] User newUser)
         {
