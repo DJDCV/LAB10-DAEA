@@ -9,45 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e409367a-6ff5-42af-bc80-15bacc5c60d5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Lab10.Application/DTOs/LoginRequestDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lab10.Application/DTOs/LoginResponseDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lab10.Application/DTOs/UserDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lab10.Application/Helpers/PasswordHasher.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lab10.Application/Interfaces/IAuthService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lab10.Application/Services/AuthService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lab10.Domain/Interfaces/IRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lab10.Domain/Interfaces/IUnitOfWork.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lab10.Infrastructure/Persistence/Repository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lab10.Infrastructure/Persistence/UnitOfWork.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Lab10-DelCarpioDeivid/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Lab10-DelCarpioDeivid/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.API/Controllers/HomeController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.API/Controllers/UserController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.API/Lab10.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Lab10.API/Lab10.API.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.API/Models/ErrorViewModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab10.API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.API/Views/Home/Index.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.API/Views/Home/Privacy.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.API/Views/Shared/Error.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.API/Views/Shared/_Layout.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.API/Views/Shared/_Layout.cshtml.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.API/Views/Shared/_ValidationScriptsPartial.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.API/Views/_ViewImports.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.API/Views/_ViewStart.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.API/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Lab10.API/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.Application/Lab10.Application.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Lab10.Application/Lab10.Application.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.Application/Services/UserService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.Domain/Entities/User.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.Domain/Interfaces/IUserRepository.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.Infrastructure/Context/Lab10DbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab10.Infrastructure/Context/Lab10DbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.Infrastructure/Entities/response.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab10.Domain/Entities/response.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.Infrastructure/Entities/role.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab10.Domain/Entities/role.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.Infrastructure/Entities/ticket.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab10.Domain/Entities/ticket.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.Infrastructure/Entities/user.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab10.Domain/Entities/user.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.Infrastructure/Entities/user_role.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab10.Domain/Entities/user_role.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.Infrastructure/InfrastructureServiceRegistration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Lab10.Infrastructure/InfrastructureServiceRegistration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab10.Infrastructure/Persistence/UserRepository.cs" beforeDir="false" />
-    </list>
+    <list default="true" id="e409367a-6ff5-42af-bc80-15bacc5c60d5" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -157,7 +119,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1748114818893</updated>
-      <workItem from="1748114820619" duration="9320000" />
+      <workItem from="1748114820619" duration="9838000" />
     </task>
     <servers />
   </component>
