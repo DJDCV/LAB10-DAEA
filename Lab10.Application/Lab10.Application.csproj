@@ -2,6 +2,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Lab10.Domain\Lab10.Domain.csproj" />
+    <ProjectReference Include="..\Lab10.Infrastructure\Lab10.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.0.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.0" />
   </ItemGroup>
 
   <PropertyGroup>

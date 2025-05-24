@@ -1,16 +1,24 @@
-using Microsoft.Extensions.DependencyInjection;
 using Lab10.Domain.Interfaces;
+using Lab10.Infrastructure.Context;
 using Lab10.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Lab10.Infrastructure
+namespace Lab10.Infrastructure;
+
+public static class InfrastructureServiceRegistration
 {
-    public static class InfrastructureServiceRegistration
+    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
-        {
-            services.AddScoped<IUserRepository, UserRepository>();
+        services.AddDbContext<Lab10DbContext>(options =>
+            options.UseMySql(configuration.GetConnectionString("DefaultConnection"), ServerVersion.AutoDetect(configuration.GetConnectionString("DefaultConnection"))));
 
-            return services;
-        }
+        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+        
+       services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        return services;
     }
 }
+

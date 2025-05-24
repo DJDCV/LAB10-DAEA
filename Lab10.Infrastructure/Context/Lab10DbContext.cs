@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Lab10.Infrastructure.Entities;
+﻿using Lab10.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lab10.Infrastructure.Context;
