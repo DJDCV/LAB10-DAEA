@@ -9,10 +9,12 @@ namespace Lab10.Infrastructure;
 
 public static class InfrastructureServiceRegistration
 {
-    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, 
+        IConfiguration configuration)
     {
         services.AddDbContext<Lab10DbContext>(options =>
-            options.UseMySql(configuration.GetConnectionString("DefaultConnection"), ServerVersion.AutoDetect(configuration.GetConnectionString("DefaultConnection"))));
+            options.UseMySql(configuration.GetConnectionString("DefaultConnection"), 
+                ServerVersion.AutoDetect(configuration.GetConnectionString("DefaultConnection"))));
 
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         

@@ -2,13 +2,12 @@ using Lab10.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Lab10.Application.Interfaces;
-using Lab10.Application.Services;
+using Lab10.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddInfrastructureServices(builder.Configuration);
-builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddApplicationServices();
 
 // Configurar JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
@@ -33,7 +32,6 @@ builder.Services.AddControllersWithViews();
 // Configurar Swagger para la documentación de la API
 builder.Services.AddSwaggerGen(options =>
 {
-    // Configurar la autenticación Bearer en Swagger
     options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
         In = Microsoft.OpenApi.Models.ParameterLocation.Header,

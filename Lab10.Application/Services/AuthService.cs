@@ -25,13 +25,21 @@ public class AuthService : IAuthService
     public async Task<LoginResponseDto> LoginAsync(LoginRequestDto loginDto)
     {
         var userRepo = _unitOfWork.Repository<user>();
+        var userRoleRepo = _unitOfWork.Repository<user_role>();
         
-        var user = await userRepo.GetByUsernameAsync(loginDto.Username);  
+        var users = await userRepo.GetAllAsync();
+        var user = users.FirstOrDefault(u => u.email != null && u.email.Equals(loginDto.Email, StringComparison.OrdinalIgnoreCase));
 
         if (user == null || !PasswordHasher.VerifyPassword(loginDto.Password, user.password_hash))
             return null!;
+        
+        var userRoles = await userRoleRepo.GetAllAsync();
+        var rolesForUser = userRoles
+            .Where(ur => ur.user_id == user.user_id && ur.role != null)
+            .Select(ur => ur.role.role_name)
+            .ToList();
 
-        var token = GenerateJwtToken(user);
+        var token = GenerateJwtToken(user, rolesForUser);
 
         return new LoginResponseDto
         {
@@ -41,11 +49,14 @@ public class AuthService : IAuthService
         };
     }
 
-    public async Task<bool> RegisterAsync(UserDto userDto)
+    public async Task<bool> RegisterAsync(UserDto userDto, string? roleName = null)
     {
         var userRepo = _unitOfWork.Repository<user>();
-        
-        var existingUser = (await userRepo.GetAllAsync()).FirstOrDefault(u => u.username == userDto.Username);
+        var userRoleRepo = _unitOfWork.Repository<user_role>();
+        var roleRepo = _unitOfWork.Repository<role>();
+
+        var existingUser = (await userRepo.GetAllAsync())
+            .FirstOrDefault(u => u.username == userDto.Username);
         if (existingUser != null) return false;
 
         var user = new user
@@ -58,15 +69,31 @@ public class AuthService : IAuthService
         };
 
         await userRepo.AddAsync(user);
-        var result = await _unitOfWork.CommitAsync();
 
+        if (!string.IsNullOrEmpty(roleName))
+        {
+            var role = (await roleRepo.GetAllAsync())
+                .FirstOrDefault(r => r.role_name.Equals(roleName, StringComparison.OrdinalIgnoreCase));
+            if (role != null)
+            {
+                var userRole = new user_role
+                {
+                    user_id = user.user_id,
+                    role_id = role.role_id,
+                    assigned_at = DateTime.UtcNow
+                };
+                await userRoleRepo.AddAsync(userRole);
+            }
+        }
+
+        var result = await _unitOfWork.CommitAsync();
         return result > 0;
     }
-
+    
     public async Task<bool> ValidateUserAsync(string username, string password)
     {
         var userRepo = _unitOfWork.Repository<user>();
-        
+
         var user = (await userRepo.GetAllAsync()).FirstOrDefault(u => u.username == username);
         if (user == null)
             return false;
@@ -74,18 +101,24 @@ public class AuthService : IAuthService
         return PasswordHasher.VerifyPassword(password, user.password_hash);
     }
 
-    private string GenerateJwtToken(user user)
+    private string GenerateJwtToken(user user, IList<string> roles)
     {
         var jwtSettings = _configuration.GetSection("JwtSettings");
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-        var claims = new[]
+        var claims = new List<Claim>
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.username),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim("userId", user.user_id.ToString())
         };
+
+        // Agregar roles como claims
+        foreach (var role in roles)
+        {
+            claims.Add(new Claim(ClaimTypes.Role, role));
+        }
 
         var token = new JwtSecurityToken(
             issuer: jwtSettings["Issuer"],
@@ -96,4 +129,4 @@ public class AuthService : IAuthService
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
-    }
+}

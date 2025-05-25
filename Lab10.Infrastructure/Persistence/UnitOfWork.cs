@@ -3,7 +3,7 @@ using Lab10.Infrastructure.Context;
 
 namespace Lab10.Infrastructure.Persistence;
 
-public class UnitOfWork : IUnitOfWork, IDisposable
+public class UnitOfWork : IUnitOfWork
 {
     private readonly Lab10DbContext _context;
     private bool _disposed;
@@ -14,8 +14,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         _context = context;
         _repositories = new Dictionary<Type, object>();
     }
-
-    // Obtener repositorio de un tipo específico
+    
     public IRepository<T> Repository<T>() where T : class
     {
         if (_repositories.ContainsKey(typeof(T)))
@@ -24,17 +23,15 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         }
 
         var repository = new Repository<T>(_context);
-        _repositories[typeof(T)] = repository; // Guardar el repositorio para futuras solicitudes
+        _repositories[typeof(T)] = repository; 
         return repository;
     }
-
-    // Guardar cambios en la base de datos
+    
     public async Task<int> CommitAsync()
     {
         return await _context.SaveChangesAsync();
     }
-
-    // Liberar recursos
+    
     protected virtual void Dispose(bool disposing)
     {
         if (!_disposed && disposing)

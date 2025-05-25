@@ -1,11 +1,10 @@
 using Lab10.Application.DTOs;
 using Lab10.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace Lab10_DelCarpioDeivid.Controllers;
 
-[Route("api/[controller]")]
+[Route("delcarpio/[controller]")]
 [ApiController]
 public class AuthController : ControllerBase
 {
@@ -23,7 +22,7 @@ public class AuthController : ControllerBase
 
         if (response == null)
         {
-            return Unauthorized("Invalid credentials");
+            return Unauthorized("Credenciales inválidas");
         }
 
         return Ok(response);
@@ -36,9 +35,9 @@ public class AuthController : ControllerBase
 
         if (!result)
         {
-            return BadRequest("User already exists or invalid data");
+            return BadRequest("El usuario ya existe");
         }
 
-        return Ok("User registered successfully");
+        return Ok("Usuario registrado con exito");
     }
 }

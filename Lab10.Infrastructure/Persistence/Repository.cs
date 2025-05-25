@@ -20,11 +20,9 @@ public class Repository<T> : IRepository<T> where T : class
     {
         return await _dbSet.ToListAsync();
     }
-
-    // Método específico para obtener un usuario por su username
+    
     public async Task<user?> GetByUsernameAsync(string username)
     {
-        // Solo se debe usar OfType<user>() si T es un tipo más general.
         return await _context.Set<user>().FirstOrDefaultAsync(u => u.username == username);
     }
 
