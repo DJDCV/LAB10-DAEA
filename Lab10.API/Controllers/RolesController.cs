@@ -1,4 +1,6 @@
-using Lab10.Application.Services;
+using Lab10.Application.Commands.Role;
+using Lab10.Application.Queries.Role;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lab10_DelCarpioDeivid.Controllers;
@@ -7,19 +9,25 @@ namespace Lab10_DelCarpioDeivid.Controllers;
 [ApiController]
 public class RolesController : ControllerBase
 {
-    private readonly RoleService _roleService;
+    private readonly IMediator _mediator;
 
-    public RolesController(RoleService roleService)
+    public RolesController(IMediator mediator)
     {
-        _roleService = roleService;
+        _mediator = mediator;
     }
 
     [HttpPost("assign")]
     public async Task<IActionResult> AssignRoleToUser([FromBody] AssignRoleRequest request)
     {
-        var success = await _roleService.AssignRoleToUser(request.UserId, request.RoleId);
+        var command = new AssignRoleToUserCommand
+        {
+            UserId = request.UserId,
+            RoleId = request.RoleId
+        };
+
+        var success = await _mediator.Send(command);
         if (!success)
-            return BadRequest("El usuario ya tiene ese rol o datos inválidos.");
+            return BadRequest("El usuario ya tiene ese rol o los datos son inválidos.");
 
         return Ok("Rol asignado correctamente.");
     }
@@ -27,14 +35,17 @@ public class RolesController : ControllerBase
     [HttpGet("user/{userId}")]
     public async Task<IActionResult> GetUserRoles(Guid userId)
     {
-        var roles = await _roleService.GetRolesForUser(userId);
+        var query = new GetRolesForUserQuery { UserId = userId };
+        var roles = await _mediator.Send(query);
         return Ok(roles);
     }
-    
+
     [HttpPost("create")]
     public async Task<IActionResult> CreateRole([FromBody] string roleName)
     {
-        var success = await _roleService.CreateRoleAsync(roleName);
+        var command = new CreateRoleCommand { RoleName = roleName };
+        var success = await _mediator.Send(command);
+
         if (!success)
             return BadRequest("El rol ya existe.");
 
@@ -44,11 +55,10 @@ public class RolesController : ControllerBase
     [HttpGet("all")]
     public async Task<IActionResult> GetAllRoles()
     {
-        var roles = await _roleService.GetAllRolesAsync();
+        var query = new GetAllRolesQuery();
+        var roles = await _mediator.Send(query);
         return Ok(roles);
     }
-
-    
 }
 
 public class AssignRoleRequest

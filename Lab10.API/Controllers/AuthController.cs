@@ -1,5 +1,6 @@
+using Lab10.Application.Commands.Auth;
 using Lab10.Application.DTOs;
-using Lab10.Application.Interfaces;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lab10_DelCarpioDeivid.Controllers;
@@ -8,36 +9,43 @@ namespace Lab10_DelCarpioDeivid.Controllers;
 [ApiController]
 public class AuthController : ControllerBase
 {
-    private readonly IAuthService _authService;
+    private readonly IMediator _mediator;
 
-    public AuthController(IAuthService authService)
+    public AuthController(IMediator mediator)
     {
-        _authService = authService;
+        _mediator = mediator;
     }
-    
+
     [HttpPost("login")]
     public async Task<ActionResult<LoginResponseDto>> Login([FromBody] LoginRequestDto loginDto)
     {
-        var response = await _authService.LoginAsync(loginDto);
+        var command = new LoginCommand
+        {
+            Email = loginDto.Email,
+            Password = loginDto.Password
+        };
+
+        var response = await _mediator.Send(command);
 
         if (response == null)
-        {
             return Unauthorized("Credenciales inválidas");
-        }
 
         return Ok(response);
     }
-    
+
     [HttpPost("register")]
     public async Task<ActionResult> Register([FromBody] UserDto userDto)
     {
-        var result = await _authService.RegisterAsync(userDto);
+        var command = new RegisterUserCommand
+        {
+            User = userDto
+        };
+
+        var result = await _mediator.Send(command);
 
         if (!result)
-        {
             return BadRequest("El usuario ya existe");
-        }
 
-        return Ok("Usuario registrado con exito");
+        return Ok("Usuario registrado con éxito");
     }
 }
