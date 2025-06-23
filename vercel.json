@@ -1,0 +1,5 @@
+{
+  "buildCommand": "dotnet publish ./Lab10.API/Lab10.API.csproj -c Release -o vercel_output",
+  "outputDirectory": "vercel_output",
+  "framework": "other"
+}

@@ -1,4 +1,3 @@
-using Lab10.Application.Commands.Response;
 using Lab10.Application.DTOs;
 using Lab10.Application.Queries.Response;
 using MediatR;
@@ -28,11 +27,11 @@ public class ResponsesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateResponse([FromBody] CreateResponseDto dto)
+    public async Task<IActionResult> CreateResponse([FromBody] CreateResponseDto command)
     {
-        var command = new CreateResponseCommand { Response = dto };
         var success = await _mediator.Send(command);
         if (!success) return BadRequest("No se pudo crear la respuesta");
         return Ok("Respuesta creada correctamente");
     }
+
 }
