@@ -57,6 +57,9 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://*:{port}");
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -82,3 +85,5 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+app.MapGet("/", () => "🚀 ¡API desplegada correctamente en Railway!");
