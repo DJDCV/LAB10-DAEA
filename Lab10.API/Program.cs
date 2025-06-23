@@ -84,7 +84,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapGet("/", () => "🚀 ¡API desplegada correctamente en Railway!");
-
 app.Run();
 
