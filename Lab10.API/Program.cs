@@ -57,20 +57,19 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+// Asegurar puerto correcto para Railway
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 builder.WebHost.UseUrls($"http://*:{port}");
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+// ✅ Habilitar Swagger SIEMPRE (producción también)
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Lab10 API V1");
-        c.RoutePrefix = string.Empty;
-    });
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Lab10 API V1");
+    c.RoutePrefix = "swagger"; // Swagger estará en /swagger
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -80,9 +79,16 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Controladores
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
+// ✅ Redirigir / a /swagger automáticamente
+app.MapGet("/", context =>
+{
+    context.Response.Redirect("/swagger");
+    return Task.CompletedTask;
+});
 
+app.Run();
