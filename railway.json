@@ -1,0 +1,11 @@
+{
+  "build": {
+    "builder": "nixpacks",
+    "nixpacksPlan": {
+      "providers": ["docker"]
+    }
+  },
+  "deploy": {
+    "startCommand": null
+  }
+}
