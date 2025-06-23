@@ -1,18 +1,17 @@
-name: Build and Deploy .NET Application
+name: Build and Publish .NET Application
 
 on:
   push:
     branches:
-      - main # Automáticamente se ejecuta cuando se suben cambios a la rama principal
+      - main  # Se ejecuta cuando haces push a la rama principal
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Check out code
       uses: actions/checkout@v2
-
 
     - name: Set up .NET
       uses: actions/setup-dotnet@v1
@@ -26,8 +25,7 @@ jobs:
       run: dotnet build --configuration Release
 
     - name: Publish application
-      run: dotnet publish --configuration Release --output ./published
+      run: dotnet publish ./Lab10.API/Lab10.API.csproj --configuration Release --output ./published
 
-    - name: Deploy to server (ejemplo de despliegue)
-      run: |
-        scp -r ./published username@server:/path/to/deploy
+    - name: List published files
+      run: ls -la ./published
