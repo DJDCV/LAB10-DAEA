@@ -1,0 +1,31 @@
+name: Build and Publish .NET Application
+
+on:
+  push:
+    branches:
+      - main  # Se ejecuta cuando haces push a la rama principal
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '8.0'
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build application
+      run: dotnet build --configuration Release
+
+    - name: Publish application
+      run: dotnet publish ./Lab10.API/Lab10.API.csproj --configuration Release --output ./published
+
+    - name: List published files
+      run: ls -la ./published
